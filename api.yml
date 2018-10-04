@@ -1,0 +1,223 @@
+#Test with: http://editor.swagger.io/
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice for Centers
+  description: Java + MySQL
+  license:
+    name: Software Architecture 2018-II
+host: 192.168.99.101:3000
+basePath: /centers-ms/resources
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /centers:
+    post:
+      summary: Creates a new center
+      operationId: createCenter
+      parameters:
+        - name: center
+          in: body
+          required: true
+          description: Center Object
+          schema:
+            $ref: '#/definitions/CenterInput'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/Center'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    get:
+      summary: Returns all centers
+      operationId: getAllCenters
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/CentersList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  /cities:
+    get:
+      summary: Returns all cities
+      operationId: getAllCities
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/CitiesList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /centers/{code}:
+    get:
+      summary: Returns a center with the given code
+      operationId: getCenterByCode
+      parameters:
+        - name: code
+          in: path
+          description: The code of the center to be returned
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Center'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    put:
+      summary: Updates a center with the given code
+      operationId: updateCenter
+      parameters:
+        - name: code
+          in: path
+          description: The code of the center to be updated
+          required: true
+          type: integer
+        - name: center
+          in: body
+          required: true
+          description: Center Object
+          schema:
+            $ref: '#/definitions/CenterInput'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Center'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    delete:
+      summary: Deletes a center with the given code
+      operationId: deleteCenter
+      parameters:
+        - name: code
+          in: path
+          description: The code of the center to be deleted
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/CenterCode'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+definitions:
+
+  # Centers
+  Center:
+    type: object
+    properties:
+      code:
+        type: integer
+      name:
+        type: string
+      lat:
+        type: number
+      lon:
+        type: number
+      address:
+        type: string
+  CenterInput:
+    type: object
+    properties:
+      name:
+        type: string
+      lat:
+        type: number
+      lon:
+        type: number
+      address:
+        type: string
+  CenterList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/Center'
+  
+  CenterCode:
+    type: object
+    properties:
+      code:
+        type: integer
+        
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: number
+      description:
+        type: object
