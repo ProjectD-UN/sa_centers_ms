@@ -3,12 +3,12 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Microservice for Centers
+  title: Microservice for Courses
   description: Java + MySQL
   license:
     name: Software Architecture 2018-II
 host: 192.168.99.101:3000
-basePath: /centers-ms/resources
+basePath: /courses-ms/resources
 schemes:
   - http
 consumes:
@@ -16,22 +16,22 @@ consumes:
 produces:
   - application/json
 paths:
-  /centers:
+  /courses:
     post:
-      summary: Creates a new center
-      operationId: createCenter
+      summary: Creates a new course
+      operationId: createCourse
       parameters:
-        - name: center
+        - name: course
           in: body
           required: true
-          description: Center Object
+          description: Course Object
           schema:
-            $ref: '#/definitions/CenterInput'
+            $ref: '#/definitions/CourseInput'
       responses:
         '201':
           description: Created
           schema:
-            $ref: '#/definitions/Center'
+            $ref: '#/definitions/Course'
         '400':
           description: Bad Request
           schema:
@@ -41,30 +41,13 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
     get:
-      summary: Returns all centers
-      operationId: getAllCenters
+      summary: Returns all courses
+      operationId: getAllCourses
       responses:
         '200':
           description: Ok
           schema:
-            $ref: '#/definitions/CentersList'
-        '406':
-          description: Not Acceptable (Invalid Params)
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorModel'
-  /cities:
-    get:
-      summary: Returns all cities
-      operationId: getAllCities
-      responses:
-        '200':
-          description: Ok
-          schema:
-            $ref: '#/definitions/CitiesList'
+            $ref: '#/definitions/CoursesList'
         '406':
           description: Not Acceptable (Invalid Params)
           schema:
@@ -74,21 +57,21 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /centers/{code}:
+  /courses/{code}:
     get:
-      summary: Returns a center with the given code
-      operationId: getCenterByCode
+      summary: Returns a course with the given code
+      operationId: getCourseByCode
       parameters:
         - name: code
           in: path
-          description: The code of the center to be returned
+          description: The code of the course to be returned
           required: true
           type: integer
       responses:
         '200':
           description: Ok
           schema:
-            $ref: '#/definitions/Center'
+            $ref: '#/definitions/Course'
         '404':
           description: Not Found
           schema:
@@ -103,25 +86,25 @@ paths:
             $ref: '#/definitions/ErrorModel'
 
     put:
-      summary: Updates a center with the given code
-      operationId: updateCenter
+      summary: Updates a course with the given code
+      operationId: updateCourse
       parameters:
         - name: code
           in: path
-          description: The code of the center to be updated
+          description: The code of the course to be updated
           required: true
           type: integer
-        - name: center
+        - name: course
           in: body
           required: true
-          description: Center Object
+          description: Course Object
           schema:
-            $ref: '#/definitions/CenterInput'
+            $ref: '#/definitions/CourseInput'
       responses:
         '200':
           description: Ok
           schema:
-            $ref: '#/definitions/Center'
+            $ref: '#/definitions/Course'
         '404':
           description: Not Found
           schema:
@@ -136,19 +119,19 @@ paths:
             $ref: '#/definitions/ErrorModel'
 
     delete:
-      summary: Deletes a center with the given code
-      operationId: deleteCenter
+      summary: Deletes a course with the given code
+      operationId: deleteCourse
       parameters:
         - name: code
           in: path
-          description: The code of the center to be deleted
+          description: The code of the course to be deleted
           required: true
           type: integer
       responses:
         '200':
           description: Ok
           schema:
-            $ref: '#/definitions/CenterCode'
+            $ref: '#/definitions/CourseCode'
         '404':
           description: Not Found
           schema:
@@ -164,32 +147,30 @@ paths:
 
 definitions:
 
-  # Centers
-  Center:
+  # Courses
+  Course:
     type: object
     properties:
       code:
         type: integer
       name:
         type: string
-      lat:
-        type: number
-      lon:
-        type: number
-      address:
+      credits:
+        type: integer
+      professor:
         type: string
-  CenterInput:
+
+  CourseInput:
     type: object
     properties:
       name:
         type: string
-      lat:
-        type: number
-      lon:
-        type: number
-      address:
+      credits:
+        type: integer
+      professor:
         type: string
-  CenterList:
+
+  CoursesList:
     type: object
     required:
       - total
@@ -200,9 +181,9 @@ definitions:
       list:
         type: array
         items:
-          $ref: '#/definitions/Center'
+          $ref: '#/definitions/Course'
   
-  CenterCode:
+  CourseCode:
     type: object
     properties:
       code:

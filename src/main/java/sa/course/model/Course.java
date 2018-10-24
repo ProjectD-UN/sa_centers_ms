@@ -14,8 +14,10 @@ public class Course {
     private Long code;
 
     private String name;
-    private Long credits;
-    private String professor;
+    private double lat;
+    private double lng;
+    private String address;
+    private String city;
 
     public Long getCode() {
         return code;
@@ -30,18 +32,29 @@ public class Course {
     public void setName(String name){
       this.name = name;
     }
-
-    public Long getCredits() {
-        return credits;
-    }
-    public void setCredits(Long credits) {
-        this.credits = credits;
-    }
-
-    public String getProfessor() {
-        return professor;
-    }
-    public void setProfessor(String professor) {
-        this.professor = professor;
-    }
+	public double getLat() {
+		return lat;
+	}
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	public double getLng() {
+		return lng;
+	}
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	    
 }

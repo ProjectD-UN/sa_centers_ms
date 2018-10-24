@@ -30,8 +30,10 @@ public class CourseService {
     public Course updateCourse(long code, Course course) {
         Course courseToUpdate = entityManager.find(Course.class, code);
         courseToUpdate.setName(course.getName());
-        courseToUpdate.setCredits(course.getCredits());
-        courseToUpdate.setProfessor(course.getProfessor());
+        courseToUpdate.setLat(course.getLat());
+        courseToUpdate.setLng(course.getLng());
+        courseToUpdate.setAddress(course.getAddress());
+        courseToUpdate.setCity(course.getCity());
         entityManager.merge(courseToUpdate);
         return entityManager.find(Course.class, code);
     }

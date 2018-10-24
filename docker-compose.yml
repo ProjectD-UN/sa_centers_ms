@@ -1,17 +1,17 @@
 version: "2.1"
 services:
-  centers-ms:
+  courses-ms:
     build: .
     ports:
       - "3000:3000"
     depends_on:
-      centers-db:
+      courses-db:
         condition: service_healthy
     healthcheck:
-      test: "curl -I centers-ms:3000/centers-ms/resources/centers/ --fail"
+      test: "curl -I courses-ms:3000/courses-ms/resources/courses/ --fail"
       interval: 20s
       retries: 10
-  centers-db:
+  courses-db:
     image: mysql:5.7
     healthcheck:
       test: "mysqlcheck -u$$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE"
@@ -20,7 +20,7 @@ services:
       retries: 15
     environment:
       MYSQL_ROOT_PASSWORD: 123
-      MYSQL_DATABASE: centers-db
+      MYSQL_DATABASE: courses-db
       MYSQL_USER: sa
       MYSQL_PASSWORD: 123
     ports:
