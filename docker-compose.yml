@@ -1,9 +1,9 @@
-version: "2.1"
+version: "2"
 services:
   courses-ms:
     build: .
     ports:
-      - "3000:3000"
+      - "3002:3000"
     depends_on:
       courses-db:
         condition: service_healthy
